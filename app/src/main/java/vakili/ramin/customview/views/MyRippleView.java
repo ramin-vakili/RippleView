@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
  */
 public class MyRippleView extends LinearLayout {
 
-    private static final long MAX_RIPPLE_DURATION = 4000;
+    private static final long MAX_RIPPLE_DURATION = 2000;
     private int rippleRadius = 0;
     private int rippleDuration = 400;
     private int xStart;
@@ -33,6 +33,7 @@ public class MyRippleView extends LinearLayout {
     private int rippleColor = Color.GRAY;
     private int highlightColor = Color.argb(20, 50, 50, 50);
     private float cornerRadius = 20;
+    private int lastRippleRadius;
 
     public MyRippleView(Context context) {
         super(context);
@@ -78,7 +79,7 @@ public class MyRippleView extends LinearLayout {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 Log.i("TAG1", "ACTION_DOWN");
-                startRippleEffect(event);
+                startRippleEffect(event, 0);
                 highlight = true;
                 animator.setDuration(MAX_RIPPLE_DURATION);
                 break;
@@ -87,24 +88,43 @@ public class MyRippleView extends LinearLayout {
                 Log.i("TAG1", "ACTION_UP");
                 highlight = false;
                 animator.cancel();
-                animator = ValueAnimator.ofInt(rippleRadius, Math.max(getWidth(), getHeight()));
-                animator.setDuration(rippleDuration);
-                animator.addUpdateListener(listener);
-                animator.start();
-                invalidate();
+                startRippleEffect(event, lastRippleRadius);
                 break;
         }
         return true;
     }
 
-    private void startRippleEffect(MotionEvent event) {
+    private void startRippleEffect(MotionEvent event, int startRadius) {
         highlightRect = new RectF(0, 0 , getWidth(), getHeight());
         xStart = (int) event.getX();
         yStart = (int) event.getY();
-        animator = ValueAnimator.ofInt(0, Math.max(getWidth() , getHeight()));
+        animator = ValueAnimator.ofInt(startRadius, Math.max(getWidth() , getHeight()));
         animator.setDuration(rippleDuration);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.addUpdateListener(listener);
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                lastRippleRadius = rippleRadius;
+                rippleRadius = 0;
+                invalidate();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
         animator.start();
     }
 
