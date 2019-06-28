@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="MyRippleView">
+    <declare-styleable name="RippleView">
         <attr name="rippleDuration" format="integer"/>
         <attr name="cornerRadius" format="integer"/>
         <attr name="maxRippleDuration" format="integer"/>

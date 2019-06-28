@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import vakili.ramin.customview.views.MyRippleView;
+import vakili.ramin.customview.views.RippleView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,8 +13,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MyRippleView myRippleView = (MyRippleView) findViewById(R.id.myRippleView);
-        myRippleView.setRippleListener(new MyRippleView.RippleListener() {
+        RippleView rippleView = (RippleView) findViewById(R.id.myRippleView);
+        rippleView.setRippleListener(new RippleView.RippleListener() {
             @Override
             public void onRippleCompleted() {
                 Toast.makeText(MainActivity.this, "Do Something", Toast.LENGTH_SHORT).show();

@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="vakili.ramin.customview.MainActivity">
 
-    <vakili.ramin.customview.views.MyRippleView
+    <vakili.ramin.customview.views.RippleView
         android:id="@+id/myRippleView"
         android:layout_centerInParent="true"
         app:rippleDuration="200"
@@ -28,6 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </vakili.ramin.customview.views.MyRippleView>
+    </vakili.ramin.customview.views.RippleView>
 
 </RelativeLayout>

@@ -20,7 +20,7 @@ import vakili.ramin.customview.R;
 /**
  * Created by RaminV on 6/27/2019.
  */
-public class MyRippleView extends LinearLayout {
+public class RippleView extends LinearLayout {
 
     private int maxRippleDuration;
     private int rippleRadius = 0;
@@ -38,34 +38,34 @@ public class MyRippleView extends LinearLayout {
     private float cornerRadius;
     private RippleListener rippleListener;
 
-    public MyRippleView(Context context) {
+    public RippleView(Context context) {
         super(context);
     }
 
-    public MyRippleView(Context context, AttributeSet attrs) {
+    public RippleView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public MyRippleView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RippleView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public MyRippleView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public RippleView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
     }
 
     private void init(AttributeSet attrs) {
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.MyRippleView, 0, 0);
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RippleView, 0, 0);
         try {
-            setRippleColor(typedArray.getColor(R.styleable.MyRippleView_rippleColor, Color.GRAY));
-            setHighlightColor(typedArray.getColor(R.styleable.MyRippleView_highlightColor, Color.argb(20, 50, 50, 50)));
-            setCornerRadius(typedArray.getInteger(R.styleable.MyRippleView_cornerRadius, 0));
-            setRippleDuration(typedArray.getInteger(R.styleable.MyRippleView_rippleDuration, 300));
-            setMaxRippleDuration(typedArray.getInteger(R.styleable.MyRippleView_maxRippleDuration, 3000));
+            setRippleColor(typedArray.getColor(R.styleable.RippleView_rippleColor, Color.GRAY));
+            setHighlightColor(typedArray.getColor(R.styleable.RippleView_highlightColor, Color.argb(20, 50, 50, 50)));
+            setCornerRadius(typedArray.getInteger(R.styleable.RippleView_cornerRadius, 0));
+            setRippleDuration(typedArray.getInteger(R.styleable.RippleView_rippleDuration, 300));
+            setMaxRippleDuration(typedArray.getInteger(R.styleable.RippleView_maxRippleDuration, 3000));
         } finally {
             typedArray.recycle();
         }
