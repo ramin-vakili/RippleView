@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Loader;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,9 +12,7 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
 
 import vakili.ramin.customview.R;
@@ -39,7 +36,7 @@ public class MyRippleView extends LinearLayout {
     private int rippleColor;
     private int highlightColor;
     private float cornerRadius;
-    private int lastRippleRadius;
+    private RippleListener rippleListener;
 
     public MyRippleView(Context context) {
         super(context);
@@ -107,38 +104,37 @@ public class MyRippleView extends LinearLayout {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                startRippleEffect(event, 0);
-                highlight = true;
-                animator.setDuration(maxRippleDuration);
+                startSlowRippleEffect(event, 0);
                 break;
 
             case MotionEvent.ACTION_UP:
                 animator.cancel();
-                startRippleEffect(event, lastRippleRadius);
+                startFastRippleEffect(event, rippleRadius);
                 break;
         }
+
         return true;
     }
 
-    private void startRippleEffect(MotionEvent event, int startRadius) {
+    private void startFastRippleEffect(MotionEvent event, int startRadius) {
         xStart = (int) event.getX();
         yStart = (int) event.getY();
         animator = ValueAnimator.ofInt(startRadius, Math.max(getWidth() , getHeight()));
         animator.setDuration(rippleDuration);
-        //animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.addUpdateListener(listener);
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
-                highlight = true;
             }
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                lastRippleRadius = rippleRadius;
                 rippleRadius = 0;
                 highlight = false;
                 postInvalidate();
+                if (rippleListener != null){
+                    rippleListener.onRippleCompleted();
+                }
             }
 
             @Override
@@ -151,6 +147,16 @@ public class MyRippleView extends LinearLayout {
 
             }
         });
+        animator.start();
+    }
+
+    private void startSlowRippleEffect(MotionEvent event, int startRadius) {
+        xStart = (int) event.getX();
+        yStart = (int) event.getY();
+        animator = ValueAnimator.ofInt(startRadius, Math.max(getWidth() , getHeight()));
+        highlight = true;
+        animator.setDuration(maxRippleDuration);
+        animator.addUpdateListener(listener);
         animator.start();
     }
 
@@ -214,5 +220,13 @@ public class MyRippleView extends LinearLayout {
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         postInvalidate();
+    }
+
+    public void setRippleListener(RippleListener rippleListener) {
+        this.rippleListener = rippleListener;
+    }
+
+    public interface RippleListener{
+        void onRippleCompleted();
     }
 }

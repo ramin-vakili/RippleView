@@ -11,6 +11,7 @@
     tools:context="vakili.ramin.customview.MainActivity">
 
     <vakili.ramin.customview.views.MyRippleView
+        android:id="@+id/myRippleView"
         android:layout_centerInParent="true"
         app:rippleDuration="200"
         app:cornerRadius="200"
