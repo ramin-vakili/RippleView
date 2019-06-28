@@ -104,22 +104,22 @@ public class RippleView extends LinearLayout {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                startSlowRippleEffect(event, 0);
+                xStart = (int) event.getX();
+                yStart = (int) event.getY();
+                startSlowRippleEffect();
                 break;
 
             case MotionEvent.ACTION_UP:
                 animator.cancel();
-                startFastRippleEffect(event, rippleRadius);
+                startFastRippleEffect();
                 break;
         }
 
         return true;
     }
 
-    private void startFastRippleEffect(MotionEvent event, int startRadius) {
-        xStart = (int) event.getX();
-        yStart = (int) event.getY();
-        animator = ValueAnimator.ofInt(startRadius, Math.max(getWidth() , getHeight()));
+    private void startFastRippleEffect() {
+        animator = ValueAnimator.ofInt(rippleRadius, Math.max(getWidth() , getHeight()));
         animator.setDuration(rippleDuration);
         animator.addUpdateListener(listener);
         animator.addListener(new Animator.AnimatorListener() {
@@ -150,10 +150,8 @@ public class RippleView extends LinearLayout {
         animator.start();
     }
 
-    private void startSlowRippleEffect(MotionEvent event, int startRadius) {
-        xStart = (int) event.getX();
-        yStart = (int) event.getY();
-        animator = ValueAnimator.ofInt(startRadius, Math.max(getWidth() , getHeight()));
+    private void startSlowRippleEffect() {
+        animator = ValueAnimator.ofInt(0, Math.max(getWidth() , getHeight()));
         highlight = true;
         animator.setDuration(maxRippleDuration);
         animator.addUpdateListener(listener);
