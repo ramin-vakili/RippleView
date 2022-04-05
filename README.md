@@ -2,7 +2,7 @@
 
 ## Usage
 
-1. Define it in your xml file and wrap the view that you want to appy your ripple effect on.
+1. Define `RippleView` in your xml file and wrap the view that you want to appy your ripple effect on.
 
 ```xml
 ...
@@ -27,9 +27,17 @@
     </vakili.ramin.customview.views.RippleView>
 ...
 ```
-2. In your code after finding the reference setOnClickListener to it and add your code there.
+2. In your code after finding the reference setRippleListener to it and add your code there.
 
 ```Java
-
+...
+RippleView rippleView = (RippleView) findViewById(R.id.myRippleView);
+rippleView.setRippleListener(new RippleView.RippleListener() {
+            @Override
+            public void onRippleCompleted() {
+                Toast.makeText(MainActivity.this, "Do Something", Toast.LENGTH_SHORT).show();
+            }
+        });
+...
 ```
 
