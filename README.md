@@ -27,7 +27,7 @@
     </vakili.ramin.customview.views.RippleView>
 ...
 ```
-2. In your code after finding the reference setRippleListener to it and add your code there.
+2. In your code after finding the reference `setRippleListener` to it and add your code there.
 
 ```Java
 ...
